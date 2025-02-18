@@ -9,8 +9,9 @@ jobs:
         runs-on: self-hosted
         steps:
             - name: Show the trigger 
-              run:
+              run: |
                echo "this is the start"
+               echo "this is another start"
 
             - name: Checkout Repository
               uses: actions/checkout@v4
