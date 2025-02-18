@@ -1,0 +1,12 @@
+name: mlModel1 Example
+on: 
+    push:
+    workflow_dispatch:    
+    
+
+jobs:
+    echo:
+        runs-on: self-hosted
+        steps:
+            - name: Show the trigger 
+              run: echo "I have been triggeed by ${{github.event_name}} event"
