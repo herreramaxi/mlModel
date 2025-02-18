@@ -1,5 +1,5 @@
 FROM python:3.8
-EXPOSE 5000
+EXPOSE 5001
 WORKDIR /opt/app
 COPY . /opt/app
 RUN pip3.8 install -r requirements.txt

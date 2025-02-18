@@ -1,6 +1,5 @@
 name: mlModel1 SecondEx
 on: 
-    push:
     workflow_dispatch:    
     
 

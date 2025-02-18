@@ -1,6 +1,5 @@
 name: mlModel1 Example
 on: 
-    push:
     workflow_dispatch:    
     
 

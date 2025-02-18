@@ -1,7 +1,6 @@
  
 name: mlModel1 thirdEx
 on: 
-   
     workflow_dispatch:  
 
 jobs:
