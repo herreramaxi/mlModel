@@ -1,7 +1,9 @@
  
 name: mlModel1 thirdEx
-on: 
-    workflow_dispatch:  
+on:
+  repository_dispatch:
+    types: [docker-hub-push] 
+  workflow_dispatch:  
 
 jobs:
     echo:
@@ -15,7 +17,10 @@ jobs:
             - name: Checkout Repository
               uses: actions/checkout@v4
 
-            
+            - name: Stop & Remove Old Container
+              run: |
+                docker stop edml-model-container || true
+                docker rm edml-model-container || true
                
             - name: Run New Container
               run: |
