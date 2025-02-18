@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 
 df = read_csv("Salary_Data.csv")
 
-X = df["YearsExperience"].values.reshape(30,1)
+X = df["YearsExperience"].values.reshape(31,1)
 y = df["Salary"]
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
