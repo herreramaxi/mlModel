@@ -1,0 +1,27 @@
+ 
+ name: mlModel1 thirdEx
+on: 
+    push:
+    workflow_dispatch:    
+    
+
+jobs:
+    echo:
+        runs-on: self-hosted
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v4
+
+            - name: Build and Tag Docker Image
+              run: |
+               cd /home/edwinasweeneys/mlModel
+               docker build -t my-ml-model:latest .
+
+           - name: Stop and Remove Old Container (if running)
+             run: |
+               docker stop number1 || true
+               docker rm number1 || true
+
+           - name: Run New Container
+             run: |
+               docker run -d --name ml-model-container my-ml-model:latest
