@@ -39,9 +39,17 @@ jobs:
                   "https://api.github.com/gists/40e0d7a802f6908031e02f9e0c4cfd7f"
 
                     # Trigger GitHub Actions Workflow
-                  curl -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+                  curl -X POST -H "Authorization: Bearer ${{ secrets.DEPLOY_ACCESS_TOKEN }}" \
                   -H "Accept: application/vnd.github.everest-preview+json" \
                     https://api.github.com/repos/e-sweeney/mlModel/actions/workflows/thirdml.yml/dispatches
+                  
+                    echo"What the HELLL IS GOING ON"
+                    curl -X POST \
+                  -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                  -H "Accept: application/vnd.github.everest-preview+json" \
+                      -d '{"ref":"main"}' \
+                   https://api.github.com/repos/e-sweeney/mlModel/actions/workflows/thirdml.yml/dispatches
+
 
               else
                    echo "No new image updates."
@@ -55,12 +63,12 @@ jobs:
           - name: Checkout Repository
             uses: actions/checkout@v4
 
-          - name: Stop & Remove Old Container
-            run: |
-              docker stop edml-model-container || true
-              docker rm edml-model-container || true
+          #- name: Stop & Remove Old Container
+          #  run: |
+          #    docker stop edml-model-container || true
+          #    docker rm edml-model-container || true
                
-          - name: Run New Container
-            run: |
-             docker pull edwinasweeney/modelbuild:latest
-             docker run -d --name edml-model-container edwinasweeney/modelbuild:latest
+          #- name: Run New Container
+          #  run: |
+          #   docker pull edwinasweeney/modelbuild:latest
+          #   docker run -d --name edml-model-container edwinasweeney/modelbuild:latest
