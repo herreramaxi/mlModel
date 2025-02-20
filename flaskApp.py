@@ -9,7 +9,7 @@ model=load("SalaryModel.pkl")
 
 @app.route('/')
 def welcome():
-    return "Welcome All"
+    return "Welcome Everyone"
 
 @app.route('/predict')
 def predict_salary():
