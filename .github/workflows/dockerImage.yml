@@ -25,6 +25,7 @@ jobs:
               run: 
                 echo "this is it" 
                 docker build . -t edwinasweeney/modelbuild:latest
+                docker images
             - name: push image to docker hub
               run: |
                 docker push edwinasweeney/modelbuild:latest
