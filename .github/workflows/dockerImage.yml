@@ -23,9 +23,10 @@ jobs:
 
             - name: build image
               run: |
-              
-                docker build . -t edwinasweeney/modelbuild:latest
+                IMAGE_TAG=$(git rev-parse --short HEAD)  # Use commit hash as a unique tag
+                docker build -t edwinasweeney/modelbuild:$IMAGE_TAG .
                 docker images
             - name: push image to docker hub
               run: |
-                docker push edwinasweeney/modelbuild:latest
+                docker push edwinasweeney/modelbuild:$IMAGE_TAG
+               
