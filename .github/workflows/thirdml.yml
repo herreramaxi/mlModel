@@ -9,41 +9,47 @@ jobs:
     echo:
         runs-on: self-hosted
         steps:
-            - name: Get latest Docker Hub tag
-              run: |
-                LATEST_TAG=$(curl -s "https://hub.docker.com/v2/repositories/your-dockerhub-username/your-repo/tags/?page_size=1" | jq -r '.results[0].name')
-                  echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
+          - name: Check Tag
+            run: |
+              GIST_URL="https://gist.githubusercontent.com/e-sweeney/40e0d7a802f6908031e02f9e0c4cfd7f/raw/238c856b6ecb3d1637b2f7302777f6e2ff5f87ee/docker-hub-latest-tag.txt"
 
-            - name: Check for changes
-              run: |
-                       PREV_TAG=$(curl -s https://gist.githubusercontent.com/e-sweeney/40e0d7a802f6908031e02f9e0c4cfd7f/raw/238c856b6ecb3d1637b2f7302777f6e2ff5f87ee/docker-hub-latest-tag.txt  # Store previous tag in a GitHub Gist or secret storage
-                        if [ "$LATEST_TAG" != "$PREV_TAG" ]; then
-                            echo "New tag detected: $LATEST_TAG"
-                            echo "$LATEST_TAG" > latest_tag.txt
-                            curl -X POST -H "Authorization: token ${{secrets.DEPLOY_ACCESS_TOKEN }}" \
-                            -H "Accept: application/vnd.github.everest-preview+json" \
-                                https://github.com/e-sweeney/mlModel/actions/workflows/thirdml.yml/dispatches \
-                                    -d '{"ref":"main"}'
-                            curl -X PUT -d "$LATEST_TAG" https://gist.githubusercontent.com/your-gist-url/raw  # Update stored tag
-                        else
-                              echo "No new image updates."
-                        fi
+              # Get the latest tag from Docker Hub
+              LATEST_TAG=$(curl -s "https://hub.docker.com/v2/repositories/edwinasweeney/modelbuild/tags/?page_size=1" | jq -r '.results[0].name')
+
+              # Get the previous tag from the Gist
+              PREV_TAG=$(curl -s "$GIST_URL")
+
+              # Compare tags and trigger workflow if there's a new image
+              if [ "$LATEST_TAG" != "$PREV_TAG" ]; then
+                  echo "New tag detected: $LATEST_TAG"
+
+                  # Update the Gist with the new tag
+                  curl -X POST -H "Authorization: token ${{ secrets.GIST_TOKEN }}" \
+                            -d "{\"files\": {\"docker-hub-latest-tag.txt\": {\"content\": \"$LATEST_TAG\"}}}" \
+                  "https://api.github.com/gists/40e0d7a802f6908031e02f9e0c4cfd7f"
+
+                    # Trigger GitHub Actions Workflow
+                  curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                  -H "Accept: application/vnd.github.everest-preview+json" \
+                  https://api.github.com/e-sweeney/mlModel/actions/workflows/thirdml.yml/dispatches \ -d '{"ref":"main"}'
+              else
+                   echo "No new image updates."
+              fi
         
-        
-            - name: Show the trigger 
-              run: |
-               echo "this is the start"
-               echo "this is another start"
+          - name: Show the trigger 
+            run: |
+              echo "this is the start"
+              echo "this is another start"
 
-            - name: Checkout Repository
-              uses: actions/checkout@v4
+          - name: Checkout Repository
+            uses: actions/checkout@v4
 
-            - name: Stop & Remove Old Container
-              run: |
-                docker stop edml-model-container || true
-                docker rm edml-model-container || true
+          - name: Stop & Remove Old Container
+            run: |
+              docker stop edml-model-container || true
+              docker rm edml-model-container || true
                
-            - name: Run New Container
-              run: |
-               docker pull edwinasweeney/modelbuild:latest
-               docker run -d --name edml-model-container edwinasweeney/modelbuild:latest
+          - name: Run New Container
+            run: |
+             docker pull edwinasweeney/modelbuild:latest
+             docker run -d --name edml-model-container edwinasweeney/modelbuild:latest
