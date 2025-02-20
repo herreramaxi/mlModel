@@ -25,8 +25,7 @@ jobs:
               # Get the latest unique tag (e.g., the most recent commit hash or version)
               LATEST_TAG=$(echo "$TAGS" | sort -r | head -n 1)  # Sort tags in descending order and get the most recent one
 
-          - name: Check Tag Again    
-            run: | 
+          
               # Get the previous tag from the Gist
               PREV_TAG=$(curl -s "$GIST_URL")
 
