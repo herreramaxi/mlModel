@@ -8,7 +8,7 @@ on:
     paths:
       - '**/Dockerfile'  # Trigger only if Dockerfile changes (optional)
     tags:
-      - 'latest*'  # Or any tag pattern like 'v1.x.x'
+      - 'lat*'  # Or any tag pattern like 'v1.x.x'
 
 jobs:
     echo:
