@@ -27,11 +27,7 @@ jobs:
                 echo $IMAGE_TAG  # Use commit hash as a unique tag
                 docker build -t edwinasweeney/modelbuild:$IMAGE_TAG .
                 docker images
-                
-            - name: Print IMAGE_TAG
-              run: echo "IMAGE_TAG is $IMAGE_TAG"
-            - name: push image to docker hub
-              run: |
+                echo "IMAGE_TAG is $IMAGE_TAG"
                 docker push edwinasweeney/modelbuild:$IMAGE_TAG
                 
                
