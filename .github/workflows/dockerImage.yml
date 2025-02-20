@@ -30,4 +30,5 @@ jobs:
             - name: push image to docker hub
               run: |
                 docker push edwinasweeney/modelbuild:$IMAGE_TAG
+                
                
