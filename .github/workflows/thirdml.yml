@@ -1,9 +1,14 @@
  
 name: mlModel1 thirdEx
 on:
-  repository_dispatch:
-    types: [docker-hub-push] 
-  workflow_dispatch:  
+  workflow_dispatch:  # Manual trigger via API
+  push:
+    #branches:
+     # - main  # Trigger on a push to the main branch
+    paths:
+      - '**/Dockerfile'  # Trigger only if Dockerfile changes (optional)
+    tags:
+      - 'v*'  # Or any tag pattern like 'v1.x.x'
 
 jobs:
     echo:
