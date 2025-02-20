@@ -20,7 +20,7 @@ jobs:
                         if [ "$LATEST_TAG" != "$PREV_TAG" ]; then
                             echo "New tag detected: $LATEST_TAG"
                             echo "$LATEST_TAG" > latest_tag.txt
-                            curl -X POST -H "Authorization: token ${{ secrets.DEPLOY_ACCESS_TOKEN }}" \
+                            curl -X POST -H "Authorization: token ${{secrets.DEPLOY_ACCESS_TOKEN }}" \
                             -H "Accept: application/vnd.github.everest-preview+json" \
                                 https://github.com/e-sweeney/mlModel/actions/workflows/thirdml.yml/dispatches \
                                     -d '{"ref":"main"}'
@@ -29,7 +29,7 @@ jobs:
                               echo "No new image updates."
                         fi
         
-        steps:
+        
             - name: Show the trigger 
               run: |
                echo "this is the start"
