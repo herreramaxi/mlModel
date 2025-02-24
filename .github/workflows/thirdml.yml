@@ -8,7 +8,10 @@ jobs:
     echo:
         runs-on: self-hosted
         steps:
+        
           - name: Get Tag
+            env:
+              GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
             run: |
               GIST_URL="https://gist.githubusercontent.com/e-sweeney/40e0d7a802f6908031e02f9e0c4cfd7f/raw/238c856b6ecb3d1637b2f7302777f6e2ff5f87ee/docker-hub-latest-tag.txt"
 
@@ -27,15 +30,14 @@ jobs:
               # Compare tags and trigger workflow if there's a new image
               if [ "$LATEST_TAG" != "$PREV_TAG" ]; then
                   echo "New tag detected, this is it->: $LATEST_TAG"
+                
+  
+                  curl -X PATCH -H "Authorization: Bearer $GIST_TOKEN" \
+                 -H "Content-Type: application/json" \
+                 -d "{\"files\": {\"docker-hub-latest-tag.txt\": {\"content\": \"$LATEST_TAG\"}}}" \
+                 "https://api.github.com/gists/40e0d7a802f6908031e02f9e0c4cfd7f"
 
-                  # Update the Gist with the new tag
-                  curl -X PATCH -H "Authorization: Bearer ${{ secrets.GIST_TOKEN }}" \
-                      -H "Content-Type: application/json" \
-                      -d "{\"files\": {\"docker-hub-latest-tag.txt\": {\"content\": \"$LATEST_TAG\"}}}" \
-                  "https://api.github.com/gists/40e0d7a802f6908031e02f9e0c4cfd7f"
-
-                                
-                    
+                 
                     curl -X POST \
                   -H "Authorization: token ${{ secrets.DEPLOY_ACCESS_TOKEN }}" \
                   -H "Accept: application/vnd.github.everest-preview+json" \
