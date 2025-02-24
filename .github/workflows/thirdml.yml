@@ -18,7 +18,7 @@ jobs:
 
               # Get the latest unique tag (e.g., the most recent commit hash or version)
               LATEST_TAG=$(echo "$TAGS" | sort -r | head -n 1)  # Sort tags in descending order and get the most recent one
-              echo "Previous Gist Tag: $LATEST_TAG"
+              echo "Lastest Tag: $LATEST_TAG"
           
               # Get the previous tag from the Gist
               PREV_TAG=$(curl -s "$GIST_URL")
@@ -30,7 +30,8 @@ jobs:
 
                   # Update the Gist with the new tag
                   curl -X PATCH -H "Authorization: Bearer ${{ secrets.GIST_TOKEN }}" \
-                            -d "{\"files\": {\"docker-hub-latest-tag.txt\": {\"content\": \"$LATEST_TAG\"}}}" \
+                      -H "Content-Type: application/json" \
+                      -d "{\"files\": {\"docker-hub-latest-tag.txt\": {\"content\": \"$LATEST_TAG\"}}}" \
                   "https://api.github.com/gists/40e0d7a802f6908031e02f9e0c4cfd7f"
 
                                 
