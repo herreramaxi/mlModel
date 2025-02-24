@@ -25,8 +25,8 @@ jobs:
 
               # Compare tags and trigger workflow if there's a new image
               if [ "$LATEST_TAG" != "$PREV_TAG" ]; then
-                  echo "New tag detected: $LATEST_TAG"
-
+                  echo "New tag detected, this is it->: $LATEST_TAG"
+                  
                   # Update the Gist with the new tag
                   curl -X PATCH -H "Authorization: Bearer ${{ secrets.GIST_TOKEN }}" \
                             -d "{\"files\": {\"docker-hub-latest-tag.txt\": {\"content\": \"$LATEST_TAG\"}}}" \
