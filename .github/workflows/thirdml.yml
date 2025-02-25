@@ -1,7 +1,11 @@
  
 name: mlModel1 thirdEx
 on:
-  workflow_dispatch:  # Manual trigger via API
+  schedule:
+   # - cron: "*/30 * * * *"  # Runs every 30 minutes
+    - cron: "*/05 * * * *"  # Runs every 05 minutes
+  workflow_dispatch:  # Allows manual triggering
+
   
 
 jobs:
