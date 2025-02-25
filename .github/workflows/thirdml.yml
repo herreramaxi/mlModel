@@ -50,9 +50,9 @@ jobs:
                 #   https://api.github.com/repos/e-sweeney/mlModel/actions/workflows/thirdml.yml/dispatches
 
 
-              # else
-              #     echo "No new image updates."
-              #fi
+              else
+                   echo "No new image updates."
+              fi
           - name: Debug Gist Update
             env:
               GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
