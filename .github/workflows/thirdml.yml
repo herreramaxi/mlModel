@@ -13,8 +13,7 @@ jobs:
             env:
               GIST_TOKEN: ${{secrets.GIST_TOKEN }}
             run: |
-              GIST_URL="https://gist.githubusercontent.com/e-sweeney/40e0d7a802f6908031e02f9e0c4cfd7f/raw/238c856b6ecb3d1637b2f7302777f6e2ff5f87ee/docker-hub-latest-tag.txt"
-
+             
               # Get the latest tag from Docker Hub
               # Fetch the list of tags from Docker Hub for your image repository
               TAGS=$(curl -s "https://hub.docker.com/v2/repositories/edwinasweeney/modelbuild/tags/" | jq -r '.results[].name')
@@ -25,7 +24,6 @@ jobs:
           
               # Get the previous tag from the Gist
               PREV_TAG=$(curl -s "https://gist.githubusercontent.com/e-sweeney/40e0d7a802f6908031e02f9e0c4cfd7f/raw/docker-hub-latest-tag.txt")
-              #PREV_TAG=$(curl -s "$GIST_URL")
               echo "Previous Gist Tag: $PREV_TAG"
 
               # Compare tags and trigger workflow if there's a new image
@@ -41,25 +39,7 @@ jobs:
               else
                    echo "No new image updates."
               fi
-          - name: Get New Tag Now
-            env:
-              GIST_TOKEN: ${{secrets.GIST_TOKEN }}
-            run: |
-              GIST_URL="https://gist.githubusercontent.com/e-sweeney/40e0d7a802f6908031e02f9e0c4cfd7f/raw/238c856b6ecb3d1637b2f7302777f6e2ff5f87ee/docker-hub-latest-tag.txt"
-
-              # Get the latest tag from Docker Hub
-              # Fetch the list of tags from Docker Hub for your image repository
-              TAGS=$(curl -s "https://hub.docker.com/v2/repositories/edwinasweeney/modelbuild/tags/" | jq -r '.results[].name')
-
-              # Get the latest unique tag (e.g., the most recent commit hash or version)
-              LATEST_TAG=$(echo "$TAGS" | sort -r | head -n 1)  # Sort tags in descending order and get the most recent one
-              echo "Lastest Tag: $LATEST_TAG"
-             
-              # Get the previous tag from the Gist
-              PREV_TAG=$(curl -s "https://gist.githubusercontent.com/e-sweeney/40e0d7a802f6908031e02f9e0c4cfd7f/raw/docker-hub-latest-tag.txt")
-             
-              echo "Previous Gist Tag: $PREV_TAG"
-
+          
             
           -  name: Show the trigger 
              run: |
