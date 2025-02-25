@@ -9,9 +9,9 @@ jobs:
         runs-on: self-hosted
         steps:
         
-          - name: Get Tag
-            env:
-              GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
+         - name: Get Tag
+           env:
+             GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
             run: |
               GIST_URL="https://gist.githubusercontent.com/e-sweeney/40e0d7a802f6908031e02f9e0c4cfd7f/raw/238c856b6ecb3d1637b2f7302777f6e2ff5f87ee/docker-hub-latest-tag.txt"
 
@@ -28,11 +28,11 @@ jobs:
               echo "Previous Gist Tag: $PREV_TAG"
 
               # Compare tags and trigger workflow if there's a new image
-              if [ "$LATEST_TAG" != "$PREV_TAG" ]; then
-                  echo "New tag detected, this is it->: $LATEST_TAG"
+              #if [ "$LATEST_TAG" != "$PREV_TAG" ]; then
+              #    echo "New tag detected, this is it->: $LATEST_TAG"
                 
-                  echo "$LATEST_TAG" > updated-tag.txt
-                  gh gist edit 40e0d7a802f6908031e02f9e0c4cfd7f --add updated-tag.txt --description "Updated latest Docker tag" --token "$GIST_TOKEN"
+              #    echo "$LATEST_TAG" > updated-tag.txt
+              #    gh gist edit 40e0d7a802f6908031e02f9e0c4cfd7f --add updated-tag.txt --description "Updated latest Docker tag" --token "$GIST_TOKEN"
                   
                   
                   
@@ -42,17 +42,26 @@ jobs:
                  #"https://api.github.com/gists/40e0d7a802f6908031e02f9e0c4cfd7f"
 
                  
-                    curl -X POST \
-                  -H "Authorization: token ${{ secrets.DEPLOY_ACCESS_TOKEN }}" \
-                  -H "Accept: application/vnd.github.everest-preview+json" \
-                      -d '{"ref":"main"}' \
-                   https://api.github.com/repos/e-sweeney/mlModel/actions/workflows/thirdml.yml/dispatches
+               #     curl -X POST \
+                #  -H "Authorization: token ${{ secrets.DEPLOY_ACCESS_TOKEN }}" \
+                #  -H "Accept: application/vnd.github.everest-preview+json" \
+                #      -d '{"ref":"main"}' \
+                #   https://api.github.com/repos/e-sweeney/mlModel/actions/workflows/thirdml.yml/dispatches
 
 
-              else
-                   echo "No new image updates."
-              fi
-        
+              # else
+              #     echo "No new image updates."
+              #fi
+          - name: Debug Gist Update
+            env:
+              GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
+            run: |
+                echo "LATEST_TAG: $LATEST_TAG"
+                curl -i -H "Authorization: Bearer $GIST_TOKEN" \
+                     -H "Accept: application/vnd.github.v3+json" \
+                     https://api.github.com/gists/40e0d7a802f6908031e02f9e0c4cfd7f
+            
+            
           - name: Show the trigger 
             run: |
               echo "this is the start"
