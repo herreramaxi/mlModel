@@ -24,7 +24,8 @@ jobs:
               echo "Lastest Tag: $LATEST_TAG"
           
               # Get the previous tag from the Gist
-              PREV_TAG=$(curl -s "$GIST_URL")
+              PREV_TAG=$(curl -s "https://gist.githubusercontent.com/e-sweeney/40e0d7a802f6908031e02f9e0c4cfd7f/raw/docker-hub-latest-tag.txt")
+              #PREV_TAG=$(curl -s "$GIST_URL")
               echo "Previous Gist Tag: $PREV_TAG"
 
               # Compare tags and trigger workflow if there's a new image
