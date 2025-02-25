@@ -11,7 +11,7 @@ jobs:
         
           - name: Get Tag
             env:
-              GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
+              GIST_TOKEN: ${{secrets.GIST_TOKEN }}
             run: |
               GIST_URL="https://gist.githubusercontent.com/e-sweeney/40e0d7a802f6908031e02f9e0c4cfd7f/raw/238c856b6ecb3d1637b2f7302777f6e2ff5f87ee/docker-hub-latest-tag.txt"
 
@@ -29,18 +29,18 @@ jobs:
               echo "Previous Gist Tag: $PREV_TAG"
 
               # Compare tags and trigger workflow if there's a new image
-              #if [ "$LATEST_TAG" != "$PREV_TAG" ]; then
-              #    echo "New tag detected, this is it->: $LATEST_TAG"
+              if [ "$LATEST_TAG" != "$PREV_TAG" ]; then
+                  echo "New tag detected, this is it->: $LATEST_TAG"
                 
               #    echo "$LATEST_TAG" > updated-tag.txt
               #    gh gist edit 40e0d7a802f6908031e02f9e0c4cfd7f --add updated-tag.txt --description "Updated latest Docker tag" --token "$GIST_TOKEN"
                   
                   
                   
-                  #curl -X PATCH -H "Authorization: Bearer $GIST_TOKEN" \
-                 #-H "Content-Type: application/json" \
-                 #-d "{\"files\": {\"docker-hub-latest-tag.txt\": {\"content\": \"$LATEST_TAG\"}}}" \
-                 #"https://api.github.com/gists/40e0d7a802f6908031e02f9e0c4cfd7f"
+                  curl -X PATCH -H "Authorization: Bearer $GIST_TOKEN" \
+                 -H "Content-Type: application/json" \
+                 -d "{\"files\": {\"docker-hub-latest-tag.txt\": {\"content\": \"$LATEST_TAG\"}}}" \
+                 "https://api.github.com/gists/40e0d7a802f6908031e02f9e0c4cfd7f"
 
                  
                #     curl -X POST \
