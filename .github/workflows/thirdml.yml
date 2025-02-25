@@ -30,16 +30,16 @@ jobs:
               if [ "$LATEST_TAG" != "$PREV_TAG" ]; then
                   echo "New tag detected, this is it->: $LATEST_TAG"
                
-                #  curl -X PATCH -H "Authorization: Bearer $GIST_TOKEN" \
-                # -H "Content-Type: application/json" \
-                # -d "{\"files\": {\"docker-hub-latest-tag.txt\": {\"content\": \"$LATEST_TAG\"}}}" \  {\"content\": \"TEST_TAG_123\"}}}" \
-                # "https://api.github.com/gists/40e0d7a802f6908031e02f9e0c4cfd7f"
+                  curl -X PATCH -H "Authorization: Bearer $GIST_TOKEN" \
+                 -H "Content-Type: application/json" \
+                 -d "{\"files\": {\"docker-hub-latest-tag.txt\": {\"content\": \"LATEST_TAG_12\"}}}" \  
+                 "https://api.github.com/gists/40e0d7a802f6908031e02f9e0c4cfd7f"
 
-                 curl -X PATCH \
-                       -H "Authorization: Bearer $GIST_TOKEN" \
-                       -H "Accept: application/vnd.github.v3+json" \
-                           -d "{\"files\": {\"docker-hub-latest-tag.txt\": {\"content\": \"TEST_TAG_999\"}}}" \
-                           "https://api.github.com/gists/40e0d7a802f6908031e02f9e0c4cfd7f"
+                # curl -X PATCH \
+                #       -H "Authorization: Bearer $GIST_TOKEN" \
+                #       -H "Accept: application/vnd.github.v3+json" \
+                #           -d "{\"files\": {\"docker-hub-latest-tag.txt\": {\"content\": \"TEST_TAG_999\"}}}" \
+                #           "https://api.github.com/gists/40e0d7a802f6908031e02f9e0c4cfd7f"
 
 
 
