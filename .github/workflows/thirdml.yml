@@ -19,7 +19,7 @@ jobs:
               TAGS=$(curl -s "https://hub.docker.com/v2/repositories/edwinasweeney/modelbuild/tags/" | jq -r '.results[].name')
 
               # Get the latest unique tag (e.g., the most recent commit hash or version)
-              LATEST_TAG=$(echo "$TAGS" | sort -r | head -n 1)  # Sort tags in descending order and get the most recent one
+              LATEST_TAG=$(echo "$TAGS" | head -n 1)  # Sort tags in descending order and get the most recent one
               echo "Lastest Tag: $LATEST_TAG"
           
               # Get the previous tag from the Gist
