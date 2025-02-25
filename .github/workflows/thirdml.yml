@@ -9,10 +9,10 @@ jobs:
         runs-on: self-hosted
         steps:
         
-         - name: Get Tag
-           env:
-             GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
-           run: |
+          - name: Get Tag
+            env:
+              GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
+            run: |
               GIST_URL="https://gist.githubusercontent.com/e-sweeney/40e0d7a802f6908031e02f9e0c4cfd7f/raw/238c856b6ecb3d1637b2f7302777f6e2ff5f87ee/docker-hub-latest-tag.txt"
 
               # Get the latest tag from Docker Hub
@@ -52,23 +52,23 @@ jobs:
               # else
               #     echo "No new image updates."
               #fi
-         - name: Debug Gist Update
-           env:
-             GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
-           run: |
+          - name: Debug Gist Update
+            env:
+              GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
+            run: |
                 echo "LATEST_TAG: $LATEST_TAG"
                 curl -i -H "Authorization: Bearer $GIST_TOKEN" \
                      -H "Accept: application/vnd.github.v3+json" \
                      https://api.github.com/gists/40e0d7a802f6908031e02f9e0c4cfd7f
             
             
-        -  name: Show the trigger 
-           run: |
+         -  name: Show the trigger 
+            run: |
               echo "this is the start"
               echo "this is another start"
 
-        -  name: Checkout Repository
-           uses: actions/checkout@v4
+         -  name: Checkout Repository
+            uses: actions/checkout@v4
 
           #- name: Stop & Remove Old Container
           #  run: |
