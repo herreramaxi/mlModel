@@ -1,4 +1,4 @@
-name: mlModelRun
+name: mhworkflow_pulldocker
 on:    
     workflow_dispatch:  
 
