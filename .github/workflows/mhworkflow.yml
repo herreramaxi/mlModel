@@ -1,0 +1,28 @@
+name: mlModelRunner
+on: 
+    workflow_dispatch:    
+    
+
+jobs:
+    echo:
+        runs-on: self-hosted
+        steps:
+            - name: Show the trigger 
+              run: echo "I have been triggeed by ${{github.event_name}} event"
+
+
+      
+            - name: Checkout Code
+              uses: actions/checkout@v4
+            - name: Printing Folders
+              run: |
+                ls
+                echo "this is from vscode"
+            - name: build image
+              run: |
+                sudo chmod 666 /var/run/docker.sock
+                docker build . -t number1
+            - name: docker run
+              run: |
+                docker run number1
+                docker ps
