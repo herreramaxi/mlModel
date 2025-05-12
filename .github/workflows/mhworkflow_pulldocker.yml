@@ -1,0 +1,15 @@
+name: mlModelRun
+on:    
+    workflow_dispatch:  
+
+jobs:
+    echo:
+        runs-on: self-hosted
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v4            
+               
+            - name: Run New Container
+              run: |		    
+               docker pull herreramaxi/modelbuild:latest
+               docker run -d --name mhml-model-container herreramaxi/modelbuild:latest
