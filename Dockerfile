@@ -1,4 +1,4 @@
-#mh v2
+#mh v2.1
 FROM python:3.8
 EXPOSE 5001
 WORKDIR /opt/app
